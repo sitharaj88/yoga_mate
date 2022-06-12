@@ -1,7 +1,6 @@
 # yoga_mate
 
-Yoga raining App
-
+Yoga Mate is rogra practice ui collections
 ## Getting Started
 
 This project is a starting point for a Flutter application.
