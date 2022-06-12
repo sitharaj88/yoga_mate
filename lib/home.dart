@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:get/instance_manager.dart';
+import 'package:get/get.dart';
 import 'package:get/route_manager.dart';
+import 'package:yoga_mate/detail.dart';
 
 class Home extends StatelessWidget {
   @override
@@ -36,11 +37,19 @@ class Home extends StatelessWidget {
   Widget _resumeYoga() {
     return Container(
       decoration: BoxDecoration(
-          color: Color(0xFFFDF1E3), borderRadius: BorderRadius.circular(20)),
+          color: Colors.pink.shade200, borderRadius: BorderRadius.circular(20)),
       width: double.infinity,
       padding: EdgeInsets.fromLTRB(20, 28, 20, 28),
       child: Stack(
         children: [
+          Positioned(
+            child: Image.asset(
+              "assets/imgs/yoga_banner.png",
+              width: Get.width / 2.5,
+            ),
+            right: 0,
+            bottom: 0,
+          ),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -69,8 +78,8 @@ class Home extends StatelessWidget {
                 height: 10,
               ),
               Text(
-                'left of last week',
-                style: TextStyle(color: Colors.grey),
+                'left of this week',
+                style: TextStyle(color: Colors.black),
               ),
               SizedBox(
                 height: 15,
@@ -102,6 +111,7 @@ class Home extends StatelessWidget {
   }
 
   Widget _popularYoga() {
+    final yogaTypes = YogaType.getYogaType();
     return Container(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -126,47 +136,77 @@ class Home extends StatelessWidget {
             height: 20,
           ),
           Container(
-            padding: EdgeInsets.fromLTRB(20, 25, 15, 25),
-            decoration: BoxDecoration(
-                color: Color(0xFFFDF1E3),
-                borderRadius: BorderRadius.circular(20)),
-            width: Get.width * 0.75,
-            height: Get.height / 2,
-            child: Stack(
-              children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      "Functional\nexertion",
-                      style:
-                          TextStyle(fontSize: 25, fontWeight: FontWeight.w500),
+            width: double.infinity,
+            height: Get.height / 3,
+            child: ListView.separated(
+                separatorBuilder: (context, index) => SizedBox(
+                      width: 10,
                     ),
-                    SizedBox(
-                      height: 15,
-                    ),
-                    Container(
-                      padding: EdgeInsets.fromLTRB(10, 10, 15, 10),
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(7),
-                          color: Colors.white),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Icon(Icons.play_arrow),
-                          Text(
-                            "Play 45 min",
-                            style: TextStyle(fontWeight: FontWeight.bold),
-                          )
-                        ],
-                      ),
-                    )
-                  ],
-                )
-              ],
-            ),
+                shrinkWrap: true,
+                scrollDirection: Axis.horizontal,
+                itemCount: yogaTypes.length,
+                itemBuilder: (context, index) {
+                  return _yogaItem(yogaTypes[index].img, Color(yogaTypes[index].color));
+                }),
           )
         ],
+      ),
+    );
+  }
+
+  Widget _yogaItem(String img, Color color) {
+    return Card(
+      elevation: 2,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
+      child: GestureDetector(
+        onTap: () {
+          Get.to(Detail());
+        },
+        child: Container(
+          padding: EdgeInsets.fromLTRB(20, 25, 15, 25),
+          decoration: BoxDecoration(
+              color: color, borderRadius: BorderRadius.circular(20)),
+          width: Get.width * 0.75,
+          height: Get.height / 3,
+          child: Stack(
+            children: [
+              Positioned(
+                child: Image.asset(img),
+                width: Get.width / 2.5,
+                right: 0,
+                bottom: 0,
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "Sivananda\nYoga",
+                    style: TextStyle(fontSize: 25, fontWeight: FontWeight.w500),
+                  ),
+                  SizedBox(
+                    height: 15,
+                  ),
+                  Container(
+                    padding: EdgeInsets.fromLTRB(10, 10, 15, 10),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(7),
+                        color: Colors.white),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Icon(Icons.play_arrow),
+                        Text(
+                          "Play 45 min",
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        )
+                      ],
+                    ),
+                  )
+                ],
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
@@ -187,7 +227,7 @@ class Home extends StatelessWidget {
                     color: Colors.black,
                     fontWeight: FontWeight.w500),
               ),
-              SizedBox(height: 10),
+              SizedBox(height: 7),
               Text(
                 "Welcome back!",
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 23),
@@ -208,5 +248,21 @@ class Home extends StatelessWidget {
         ],
       ),
     );
+  }
+}
+
+class YogaType {
+  final String img;
+  final int color;
+
+  const YogaType({required this.img, required this.color});
+
+  static List<YogaType> getYogaType() {
+    final types = <YogaType>[];
+    types.add(const YogaType(img: "assets/imgs/yoga.png", color: 0xFFFDF1E3));
+    types.add(const YogaType(img: "assets/imgs/yoga_type_1.png", color: 0xFFbdaaa4));
+    types.add(const YogaType(img: "assets/imgs/yoga.png", color: 0xFFFDF1E3));
+    types.add(const YogaType(img: "assets/imgs/yoga_type_1.png", color: 0xFFbdaaa4));
+    return types;
   }
 }

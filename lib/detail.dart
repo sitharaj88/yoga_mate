@@ -16,10 +16,14 @@ class Detail extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Container(
-                          decoration: BoxDecoration(color: Colors.orange),
+                          decoration: BoxDecoration(color: Color(0xFFFDF1E3)),
                           height: Get.width / 1.4,
                           child: Stack(
-                            children: [],
+                            children: [
+                              Center(
+                                child: Image.asset("assets/imgs/yoga.png"),
+                              )
+                            ],
                           )),
                       Container(
                         padding: EdgeInsets.all(20),
@@ -27,14 +31,14 @@ class Detail extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              "Functional exertion",
+                              "Sivananda Yoga",
                               style: TextStyle(
                                   fontSize: 25, fontWeight: FontWeight.bold),
                             ),
                             SizedBox(
                               height: 4,
                             ),
-                            Text("3 Functional Yoga")
+                            Text("3 Sivananda Yoga")
                           ],
                         ),
                       ),
@@ -69,59 +73,69 @@ class Detail extends StatelessWidget {
     return Container(
       child: Column(
         children: [
-          _yogaLevelItem("Beginner  Pose", "20 min exercise"),
-          _yogaLevelItem("Intermediate Pose", "40 min exercise"),
-          _yogaLevelItem("Advance Pose", "120 min exercise"),
+          _yogaLevelItem("Beginner  Pose", "20 min exercise",
+              "assets/imgs/yoga_pose_1.jpg"),
+          _yogaLevelItem("Intermediate Pose", "40 min exercise",
+              "assets/imgs/yoga_pose_2.jpg"),
+          _yogaLevelItem("Advance Pose", "120 min exercise",
+              "assets/imgs/yoga_pose_3.jpg"),
         ],
       ),
     );
   }
 
-  Widget _yogaLevelItem(String title, String desc) {
+  Widget _yogaLevelItem(String title, String desc, String img) {
     return Container(
       margin: EdgeInsets.fromLTRB(20, 10, 20, 10),
-      padding: EdgeInsets.all(10),
-      decoration: BoxDecoration(
-          color: Colors.grey.shade200, borderRadius: BorderRadius.circular(10)),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Row(
+      child: Card(
+        child: Container(
+          padding: EdgeInsets.all(10),
+          decoration: BoxDecoration(borderRadius: BorderRadius.circular(10)),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Container(
-                color: Colors.red,
-                width: 50,
-                height: 50,
-              ),
-              SizedBox(
-                width: 13,
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+              Row(
                 children: [
-                  Text(
-                    title,
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17),
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(8),
+                    child: Image.asset(
+                      img,
+                      width: 50,
+                      height: 50,
+                    ),
                   ),
                   SizedBox(
-                    height: 5,
+                    width: 13,
                   ),
-                  Text(
-                    desc,
-                    style: TextStyle(color: Colors.grey),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        title,
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 17),
+                      ),
+                      SizedBox(
+                        height: 5,
+                      ),
+                      Text(
+                        desc,
+                        style: TextStyle(color: Colors.grey),
+                      )
+                    ],
                   )
                 ],
+              ),
+              CircleAvatar(
+                backgroundColor: Colors.deepOrangeAccent,
+                child: Icon(
+                  Icons.play_arrow,
+                  color: Colors.white,
+                ),
               )
             ],
           ),
-          CircleAvatar(
-            backgroundColor: Colors.deepOrangeAccent,
-            child: Icon(
-              Icons.play_arrow,
-              color: Colors.white,
-            ),
-          )
-        ],
+        ),
       ),
     );
   }
@@ -131,11 +145,16 @@ class Detail extends StatelessWidget {
       padding: EdgeInsets.all(25),
       child: Row(
         children: [
-          CircleAvatar(
-            backgroundColor: Colors.white,
-            child: Icon(
-              Icons.arrow_back_ios_new,
-              color: Colors.black,
+          GestureDetector(
+            onTap: () {
+              Get.back();
+            },
+            child: CircleAvatar(
+              backgroundColor: Colors.white,
+              child: Icon(
+                Icons.arrow_back_ios_new,
+                color: Colors.black,
+              ),
             ),
           )
         ],
